@@ -338,41 +338,25 @@
     </div>
 
     <script>
-        // Función para marcar la navegación activa
         function setActive(element) {
-            // Remover la clase active de todos los elementos
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Añadir clase active al elemento seleccionado
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             element.classList.add('active');
         }
-        
-        // Detectar qué sección está visible en el viewport
+
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.section');
             const navItems = document.querySelectorAll('.nav-item');
-            
-            // Marcar la primera pestaña como activa al cargar
             navItems[0].classList.add('active');
-            
-            // Función para verificar cuál sección es visible
+
             function checkVisibleSection() {
                 let current = '';
-                
                 sections.forEach(section => {
                     const sectionTop = section.getBoundingClientRect().top;
                     const sectionBottom = section.getBoundingClientRect().bottom;
-                    
-                    // Si la sección está visible en la pantalla
                     if (sectionTop < window.innerHeight/2 && sectionBottom > window.innerHeight/2) {
                         current = '#' + section.getAttribute('id');
                     }
                 });
-                
-                // Actualizar navegación activa
                 if (current !== '') {
                     navItems.forEach(item => {
                         item.classList.remove('active');
@@ -382,57 +366,42 @@
                     });
                 }
             }
-            
-            // Verificar sección visible al hacer scroll
+
             window.addEventListener('scroll', checkVisibleSection);
-            
-            // Verificar al cargar la página
             checkVisibleSection();
-            
-            // Implementación de la navegación de documentos
+
             const prevBtn = document.getElementById('prev-doc');
             const nextBtn = document.getElementById('next-doc');
             const dots = document.querySelectorAll('.doc-dot');
             const slides = document.querySelectorAll('.document-slider');
             let currentSlide = 1;
             const totalSlides = slides.length;
-            
-            // Función para actualizar la navegación
+
             function updateNavigation() {
-                // Actualizar botones
                 prevBtn.disabled = currentSlide === 1;
                 nextBtn.disabled = currentSlide === totalSlides;
-                
-                // Actualizar indicadores (dots)
-                dots.forEach(dot => {
-                    dot.classList.remove('active');
-                });
-                document.querySelector(.doc-dot[data-doc="${currentSlide}"]).classList.add('active');
-                
-                // Mostrar slide actual
-                slides.forEach(slide => {
-                    slide.classList.remove('active');
-                });
-                document.getElementById(doc-${currentSlide}).classList.add('active');
+
+                dots.forEach(dot => dot.classList.remove('active'));
+                document.querySelector(`.doc-dot[data-doc="${currentSlide}"]`).classList.add('active');
+
+                slides.forEach(slide => slide.classList.remove('active'));
+                document.getElementById(`doc-${currentSlide}`).classList.add('active');
             }
-            
-            // Evento para botón anterior
+
             prevBtn.addEventListener('click', () => {
                 if (currentSlide > 1) {
                     currentSlide--;
                     updateNavigation();
                 }
             });
-            
-            // Evento para botón siguiente
+
             nextBtn.addEventListener('click', () => {
                 if (currentSlide < totalSlides) {
                     currentSlide++;
                     updateNavigation();
                 }
             });
-            
-            // Evento para los indicadores (dots)
+
             dots.forEach(dot => {
                 dot.addEventListener('click', () => {
                     currentSlide = parseInt(dot.getAttribute('data-doc'));
