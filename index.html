@@ -337,7 +337,7 @@
         <p>Atención de urgencias disponible 24/7</p>
     </div>
 
-    <script>
+     <script>
         function setActive(element) {
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             element.classList.add('active');
@@ -382,10 +382,12 @@
                 nextBtn.disabled = currentSlide === totalSlides;
 
                 dots.forEach(dot => dot.classList.remove('active'));
-                document.querySelector(`.doc-dot[data-doc="${currentSlide}"]`).classList.add('active');
+                const activeDot = document.querySelector(`.doc-dot[data-doc="${currentSlide}"]`);
+                if (activeDot) activeDot.classList.add('active');
 
                 slides.forEach(slide => slide.classList.remove('active'));
-                document.getElementById(`doc-${currentSlide}`).classList.add('active');
+                const activeSlide = document.getElementById(`doc-${currentSlide}`);
+                if (activeSlide) activeSlide.classList.add('active');
             }
 
             prevBtn.addEventListener('click', () => {
@@ -408,6 +410,18 @@
                     updateNavigation();
                 });
             });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && currentSlide > 1) {
+                    currentSlide--;
+                    updateNavigation();
+                } else if (e.key === 'ArrowRight' && currentSlide < totalSlides) {
+                    currentSlide++;
+                    updateNavigation();
+                }
+            });
+
+            updateNavigation();
         });
     </script>
 </body>
